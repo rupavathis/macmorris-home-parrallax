@@ -11,8 +11,3 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
-.css-1rndd9j-MuiPopper-root-MuiAutocomplete-popper {
-  /* z-index: 1300; */
-  position: absolute;
-}
