@@ -3,14 +3,13 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-// import Map from './Map'
-// import Search from './Search';
+import { BrowserRouter } from 'react-router-dom';
 
 const root1 = ReactDOM.createRoot(document.getElementById('root'));
 root1.render(
-  <React.StrictMode>
+ <BrowserRouter>
     <App />
-  </React.StrictMode>
+ </BrowserRouter>
 );
 
 

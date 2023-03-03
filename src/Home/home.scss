@@ -1,4 +1,8 @@
-.css-1rndd9j-MuiPopper-root-MuiAutocomplete-popper {
-    /* z-index: 1300; */
-    position: absolute;
-  }
+.fade-out-text {
+  opacity: 1;
+  transition: opacity 1s;
+}
+
+.fade-out-text:hover {
+  opacity: 0;
+}

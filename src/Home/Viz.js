@@ -1,6 +1,8 @@
-import Map from './Map'
+import MapHome from './Map'
 import Search from './Search'
 import Network from './Network'
+import { Link } from 'react-router-dom'
+import SearchWrapper from './SearchWrapper'
 
 function Viz({ changeIrish, setOpenNetwork }) {
     return (
@@ -20,9 +22,9 @@ function Viz({ changeIrish, setOpenNetwork }) {
                     <div className="container-fluid">
                         <div className="row">
                             <div className="col-lg-6 nopadding">
-                                <div className="image hover-effect img-container">
-                                    <Search className="equalheight" style={{ paddingTop: "30px" }} />
-                                </div>
+                               
+                                    <SearchWrapper />
+                                    
                             </div>
                             <div className="col-lg-6 nopadding">
                                 <div className="split-box text-center center-block container-padding equalheight">
@@ -32,9 +34,10 @@ function Viz({ changeIrish, setOpenNetwork }) {
                                         <p className="heading_space wow fadeIn" data-wow-delay="400ms">
                                             Comhéadan cuardaigh a chabhraíonn leat na daoine agus na téacsanna
                                             sa bhunachar sonraí a aimsiú</p>
-                                        <a href="#our-work" className="button btnprimary pagescroll wow fadeInUp"
-                                            data-wow-delay="450ms">
-                                            Explore Search!</a>
+                                        <Link to='search'>
+                                            <div className="button btnsecondary pagescroll wow fadeInUp"
+                                                data-wow-delay="450ms">Explore Search!</div>
+                                        </Link>
                                     </div>}
                                     {!changeIrish && <div className="heading-title padding">
                                         <span className=" wow fadeIn" data-wow-delay="300ms">Visualisation Interface</span>
@@ -42,9 +45,10 @@ function Viz({ changeIrish, setOpenNetwork }) {
                                         <p className="heading_space wow fadeIn" data-wow-delay="400ms">
                                             A Search interface to aid exploration of the different people and texts in our
                                             database </p>
-                                        <a href="#our-work" className="button btnprimary pagescroll wow fadeInUp"
-                                            data-wow-delay="450ms">
-                                            Explore Search!</a>
+                                        <Link to='search'>
+                                            <div className="button btnsecondary pagescroll wow fadeInUp"
+                                                data-wow-delay="450ms">Explore Search!</div>
+                                        </Link>
                                     </div>}
                                 </div>
                             </div>
@@ -60,23 +64,27 @@ function Viz({ changeIrish, setOpenNetwork }) {
                                         <span className=" wow fadeIn" data-wow-delay="300ms">Léirshamhlú Idirghníomhach</span>
                                         <h2 className="darkcolor bottom20 wow fadeIn" data-wow-delay="350ms">Léarscáil</h2>
                                         <p className="heading_space wow fadeIn" data-wow-delay="400ms">
-                                        Féach ar an Léarscáil Dhomhain de Chúige Mumhan</p>
-                                        <a href="#our-team" className="button btnsecondary pagescroll wow fadeInUp"
-                                            data-wow-delay="450ms">Explore Map!</a>
+                                            Féach ar an Léarscáil Dhomhain de Chúige Mumhan</p>
+                                        <Link to='map'>
+                                            <div className="button btnsecondary pagescroll wow fadeInUp"
+                                                data-wow-delay="450ms">Explore Map!</div>
+                                        </Link>
                                     </div>}
                                     {!changeIrish && <div className="heading-title padding">
                                         <span className=" wow fadeIn" data-wow-delay="300ms">Visualisation interface</span>
                                         <h2 className="darkcolor bottom20 wow fadeIn" data-wow-delay="350ms">Map</h2>
                                         <p className="heading_space wow fadeIn" data-wow-delay="400ms">
                                             Interact with our cultural Deep Map of Munster </p>
-                                        <a href="#our-team" className="button btnsecondary pagescroll wow fadeInUp"
-                                            data-wow-delay="450ms">Explore Map!</a>
+                                        <Link to='map'>
+                                            <div className="button btnsecondary pagescroll wow fadeInUp"
+                                                data-wow-delay="450ms">Explore Map!</div>
+                                        </Link>
                                     </div>}
                                 </div>
                             </div>
                             <div className="col-lg-6 nopadding">
-                                <div className="image hover-effect img-container">
-                                    <Map className="equalheight" />
+                                <div className="img-container" style={{height: 500}}>
+                                    <MapHome className="equalheight" />
                                 </div>
                             </div>
                         </div>
@@ -86,7 +94,8 @@ function Viz({ changeIrish, setOpenNetwork }) {
                     <div className="container-fluid">
                         <div className="row">
                             <div className="col-lg-6 nopadding">
-                                <div className="image hover-effect img-container">
+                                {/* <div className="image hover-effect img-container"> */}
+                                <div className="img-container">
                                     <Network className="equalheight" />
                                 </div>
                             </div>
@@ -96,12 +105,13 @@ function Viz({ changeIrish, setOpenNetwork }) {
                                         <span className=" wow fadeIn" data-wow-delay="300ms">Léirshamhlú Idirghníomhach</span>
                                         <h2 className="darkcolor bottom20 wow fadeIn" data-wow-delay="350ms">Líonraí</h2>
                                         <p className="heading_space wow fadeIn" data-wow-delay="400ms">
-                                        Bain triail as an chomhéadan líonraí seo chun na naisc idir na daoine agus 
-                                        na téacsanna sa bhunachar sonraí a fheiceáil</p>
+                                            Bain triail as an chomhéadan líonraí seo chun na naisc idir na daoine agus
+                                            na téacsanna sa bhunachar sonraí a fheiceáil</p>
 
-                                        <a href="#our-work" className="button btnprimary pagescroll wow fadeInUp"
-                                            data-wow-delay="450ms">
-                                            Explore Network!</a>
+                                        <Link to='network'>
+                                            <div className="button btnsecondary pagescroll wow fadeInUp"
+                                                data-wow-delay="450ms">Explore Network!</div>
+                                        </Link>
                                     </div>}
                                     {!changeIrish && <div className="heading-title padding">
                                         <span className=" wow fadeIn" data-wow-delay="300ms">Visualisation Interface</span>
@@ -111,9 +121,10 @@ function Viz({ changeIrish, setOpenNetwork }) {
                                             to
                                             see how people and texts connect in our database</p>
 
-                                        <a href="#our-work" className="button btnprimary pagescroll wow fadeInUp"
-                                            data-wow-delay="450ms" onClick={() => setOpenNetwork(true)}>
-                                            Explore Network!</a>
+                                        <Link to='network'>
+                                            <div className="button btnsecondary pagescroll wow fadeInUp"
+                                                data-wow-delay="450ms">Explore Network!</div>
+                                        </Link>
                                     </div>}
                                 </div>
                             </div>

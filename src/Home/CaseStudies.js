@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 function CaseStudies({ setSelectedCS }) {
   return (
     <section id="our-portfolio" className="bglight padding">
@@ -14,7 +16,7 @@ function CaseStudies({ setSelectedCS }) {
         </div>
         <div id="flat-gallery" className="cbp dark_overlay">
           <div className="cbp-item web logo">
-            <img src="images/case-studies/Historical Overview.jpg" alt="" />
+            <img src="images/case-studies/historic.jpg" alt="" />
             <div className="overlay center-block whitecolor">
               <a className="plus" data-fancybox="gallery" href="images/gallery-flat1.jpg"></a>
               <h4 className="top30">Case study 1</h4>
@@ -23,75 +25,95 @@ function CaseStudies({ setSelectedCS }) {
           </div>
 
           <div className="cbp-item">
-            <img src="images/case-studies/Networking Women.png" alt="" />
-            <div className="overlay center-block whitecolor" style={{ "cursor": "pointer" }}
-              onClick={() => setSelectedCS("network-women")}>
-              <a className="plus" data-fancybox="gallery" href="images/gallery-flat4.jpg"></a>
-              <h4 className="top30">Networking Women</h4>
-              <p style={{ "padding": "10px" }}>Learn about our network and some of the women in our
-                database</p>
-            </div>
+            <img src="images/case-studies/women.png" alt="" />
+            <Link to="networking-women">
+              <div className="overlay center-block whitecolor" style={{ "cursor": "pointer" }}
+                onClick={() => setSelectedCS("network-women")}>
+                <a className="plus" data-fancybox="gallery" href="images/gallery-flat4.jpg"></a>
+                <h4 className="top30">Networking Women</h4>
+                <p style={{ "padding": "10px" }}>Learn about our network and some of the women in our
+                  database</p>
+              </div>
+            </Link>
           </div>
 
 
           <div className="cbp-item web print graphic">
-            <img src="images/case-studies/Historical Overview.jpg" alt="" />
-            <div className="overlay center-block whitecolor" style={{ "cursor": "pointer" }}
-              onClick={() => setSelectedCS("historic-overview")}>
-              <h4 className="top30">Historical Overview</h4>
-              <p style={{ "padding": "10px", "cursor": "pointer" }}>Learn more about the dramatic period of conflict,
-                change, and innovation which transformed Ireland.</p>
-            </div>
+            <img src="images/case-studies/historic.jpg" alt="" />
+            <Link to="historical-overview">
+              <div className="overlay center-block whitecolor" style={{ "cursor": "pointer" }}
+                onClick={() => setSelectedCS("historic")}>
+                <h4 className="top30">Historical Overview</h4>
+                <p style={{ "padding": "10px", "cursor": "pointer" }}>Learn more about the dramatic period of conflict,
+                  change, and innovation which transformed Ireland.</p>
+              </div>
+
+            </Link>
+
           </div>
 
           <div className="cbp-item">
-            <img src="images/case-studies/Spenser in Munster.jpeg" alt="" />
-            <div className="overlay center-block whitecolor" style={{ "cursor": "pointer" }}
-              onClick={() => setSelectedCS("munster")}>
-              <a className="plus" data-fancybox="gallery" href="images/gallery-flat4.jpg"></a>
-              <h4 className="top30">Spenser in Munster</h4>
-              <p style={{ "padding": "10px" }}>Who was Edmund Spenser and what was his connection to Munster?</p>
-            </div>
+            <img src="images/case-studies/spenser.jpeg" alt="" />
+            <Link to="spenser-in-munster">
+              <div className="overlay center-block whitecolor" style={{ "cursor": "pointer" }}
+                onClick={() => setSelectedCS("munster")}>
+                <a className="plus" data-fancybox="gallery" href="images/gallery-flat4.jpg"></a>
+                <h4 className="top30">Spenser in Munster</h4>
+                <p style={{ "padding": "10px" }}>Who was Edmund Spenser and what was his connection to Munster?</p>
+              </div>
+            </Link>
           </div>
           <div className="cbp-item">
-            <img src="images/case-studies/Staging Early Modern Drama Today.jpg" alt="" />
-            <div className="overlay center-block whitecolor" style={{ "cursor": "pointer" }}
-              onClick={() => setSelectedCS("modern-drama")}>
-              <a className="plus" data-fancybox="gallery" href="images/gallery-flat4.jpg"></a>
-              <h4 className="top30">Staging Early Modern Drama today</h4>
-              <p style={{ "padding": "10px" }}>A reflection on the staging of Hic Et
-                Ubique in Smock Alley Theatre</p>
-            </div>
+            <img src="images/case-studies/drama.jpg" alt="" />
+            <Link to="early-modern-drama">
+              <div className="overlay center-block whitecolor" style={{ "cursor": "pointer" }}
+                onClick={() => setSelectedCS("modern-drama")}>
+                <a className="plus" data-fancybox="gallery" href="images/gallery-flat4.jpg"></a>
+                <h4 className="top30">Staging Early Modern Drama today</h4>
+                <p style={{ "padding": "10px" }}>A reflection on the staging of Hic Et
+                  Ubique in Smock Alley Theatre</p>
+              </div>
+            </Link>
           </div>
 
           <div className="cbp-item web print graphic">
-            <img src="images/case-studies/Using Gaelic Sources.png" alt="" />
-            <div className="overlay center-block whitecolor" style={{ "cursor": "pointer" }}
-              onClick={() => setSelectedCS("gaelic")}>
-              <h4 className="top30">Using Gaelic Sources</h4>
-              <p style={{ "padding": "10px" }}>Explore ways to use and engage with Gaelic sources.</p>
-            </div>
+            <img src="images/case-studies/gaelic.png" alt="" />
+            <Link to="using-gaelic-sources">
+              <div className="overlay center-block whitecolor" style={{ "cursor": "pointer" }}
+                onClick={() => setSelectedCS("gaelic")}>
+                <h4 className="top30">Using Gaelic Sources</h4>
+                <p style={{ "padding": "10px" }}>Explore ways to use and engage with Gaelic sources.</p>
+              </div>
+            </Link>
           </div>
-          <div className="cbp-item web print graphic">
-            <img src="images/case-studies/What is Bardic Poetry.jpg" alt="" />
-            <div className="overlay center-block whitecolor" style={{ "cursor": "pointer" }}
-              onClick={() => setSelectedCS("bardic-poetry")}>
-              <h4 className="top30">What is Bardic Poetry?</h4>
-              <p style={{ "padding": "10px" }}>Learn more about the literary landscape of Early Modern Ireland and
-                the poetry
-                composed by the professional caste of poets (or filidh) trained in the bardic schools.
-              </p>
-            </div>
-          </div>
+
           <div className="cbp-item print">
             <img src="images/case-studies/munster.png" alt="" />
-            <div className="overlay center-block whitecolor" style={{ "cursor": "pointer" }}
-              onClick={() => setSelectedCS("deep-map")}>
-              <h4 className="top30">Deep Mapping</h4>
-              <p style={{ "padding": "10px" }}>What is Deep Mapping and how does that allow us to explore
-                cultural activity in Munster?</p>
-            </div>
+            <Link to="deep-mapping">
+              <div className="overlay center-block whitecolor" style={{ "cursor": "pointer" }}
+                onClick={() => setSelectedCS("deep-map")}>
+                <h4 className="top30">Deep Mapping</h4>
+                <p style={{ "padding": "10px" }}>What is Deep Mapping and how does that allow us to explore
+                  cultural activity in Munster?</p>
+              </div>
+            </Link>
           </div>
+
+          <div className="cbp-item web print graphic">
+            <img src="images/case-studies/bardic.jpg" alt="" />
+            <Link to="what-is-bardic-poetry">
+              <div className="overlay center-block whitecolor" style={{ "cursor": "pointer" }}
+
+                onClick={() => setSelectedCS("bardic-poetry")}>
+                <h4 className="top30">What is Bardic Poetry?</h4>
+                <p style={{ "padding": "10px" }}>Learn more about the literary landscape of Early Modern Ireland and
+                  the poetry
+                  composed by the professional caste of poets (or filidh) trained in the bardic schools.
+                </p>
+              </div>
+            </Link>
+          </div>
+         
         </div>
       </div>
     </section>

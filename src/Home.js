@@ -7,15 +7,17 @@ import Team from "./Home/Team";
 import Tweet from "./Home/Tweet";
 import Footer from "./Home/Footer";
 import CaseStudiesIrish from "./Home/CaseStudiesIrish";
+import SideMenu from "./Home/SideMenu";
 import { useState } from 'react';
 
-function Home({setOpenNetwork, changeIrish, setSelectedCS}) {
+function Home({ setOpenNetwork, changeIrish, setSelectedCS }) {
    return (
-      <>         
+      <>
+         <SideMenu />
          <Banner />
-         <Intro changeIrish={changeIrish}/>
-         <Viz changeIrish={changeIrish} setOpenNetwork={setOpenNetwork}/>
-         {!changeIrish && <CaseStudies setSelectedCS={setSelectedCS}/>}
+         <Intro changeIrish={changeIrish} />
+         <Viz changeIrish={changeIrish} setOpenNetwork={setOpenNetwork} />
+         {!changeIrish && <CaseStudies setSelectedCS={setSelectedCS} />}
          {changeIrish && <CaseStudiesIrish />}
          <Team />
          <Tweet />

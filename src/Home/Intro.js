@@ -4,7 +4,7 @@ function intro({ changeIrish }) {
             <div className="container">
                 <div className="row">
                     <div className="col-md-6 col-sm-7 text-md-start text-center wow fadeInLeft" data-wow-delay="300ms">
-                       {changeIrish && <div className="heading-title heading_space">
+                        {changeIrish && <div className="heading-title heading_space">
                             <span>Eolas fúinne:</span>
                             <h2 className="darkcolor bottom30">Cad atá i gceist le MACMORRIS?</h2>
                         </div>}
@@ -39,7 +39,7 @@ function intro({ changeIrish }) {
                             </>
                         }
 
-                        {changeIrish && 
+                        {changeIrish &&
                             <>
                                 <p>
                                     Is í aidhm an tionscadail seo léiriú a thabhairt ar Éirinn sa Nua-Aois Luath, a théann in
@@ -63,10 +63,19 @@ function intro({ changeIrish }) {
                     </div>
                     <div className="col-md-6 col-sm-5 wow fadeInRight" data-wow-delay="350ms">
 
-                        <iframe width="560" height="315" src="https://www.youtube.com/embed/dZn47_whvEg"
+                        {/* <iframe width="560" height="315" src="https://www.youtube.com/embed/dZn47_whvEg"
                             title="YouTube video player"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowFullScreen></iframe>
+                            allowFullScreen></iframe> */}
+
+                        <iframe
+                            width="853"
+                            height="480"
+                            src="https://www.youtube.com/embed/dZn47_whvEg"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                            title="Embedded youtube"
+                        />
 
                     </div>
                 </div>
