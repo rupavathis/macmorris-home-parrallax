@@ -5,7 +5,7 @@ import Container from "@mui/material/Container";
 import AsyncSelect from 'react-select/async';
 import AdvancedSearch from './AdvancedSearch';
 
-export default function BasicSearch( {setWorksData, setSearchData, displayTitles}) {
+export default function BasicSearch( {setWorksData, setSearchData, displayTitles, setLoading }) {
 
   console.log("basic")
   const [inputValue, setInputValue] = useState("");
@@ -14,17 +14,16 @@ export default function BasicSearch( {setWorksData, setSearchData, displayTitles
   const onSearchChange = async (
     event   
   ) => {
-    console.log("new Value", event);
+    setLoading(true)
     const workRes = await fetch(`/search/works/${event.id}`);
     const workJson = await workRes.json();
     console.log("works json", workJson);
     setWorksData(workJson);
     setSearchData('works');
+    setLoading(false)
   };
 
   const filterNames = (inputValue) => {
-    console.log("Filter titles", inputValue)
-    
     return (displayTitles.map((d) => ({
       label: d.display_title,
       id: d.id
@@ -56,7 +55,6 @@ export default function BasicSearch( {setWorksData, setSearchData, displayTitles
 
   const handleInputChange = (newValue) => {
     // const newInput = newValue.replace(/\W/g, '');
-    console.log({newValue})
     const newInput = newValue;
     setInputValue(newInput);
     return newInput;

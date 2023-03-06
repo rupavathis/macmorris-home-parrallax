@@ -3,9 +3,13 @@ import Container from "@mui/material/Container";
 import { useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
+// import Button from 'react-bootstrap/Button';
 import Button from '@mui/material/Button';
+import '../search.scss'
 
-export default function AdvancedSearch( {setSearchData, setPeopleData }) {
+import Spinner from 'react-bootstrap/Spinner';
+
+export default function AdvancedSearch({ setSearchData, setPeopleData, setLoading, loading }) {
 
   const [genders, setGenders] = useState([]);
   const [rDesignations, setRDesignations] = useState([]);
@@ -23,19 +27,38 @@ export default function AdvancedSearch( {setSearchData, setPeopleData }) {
 
 
   const handleSearch = async () => {
-    setSearch(true);
+    setSearch(true)
+    setLoading(true)
     let url = 'advancedSearch/people?';
     if (selectedGender != null) url += `gender=${selectedGender}`
     if (!(selectedRSubtype && selectedRSubtype.length === 0)) url += `&rSubtypes=${selectedRSubtype}`
     if (selectedROrder != null) url += `&rOrder=${selectedROrder}`
     if (!(selectedAttribs && selectedAttribs.length === 0)) url += `&attribs=${selectedAttribs}`
 
-    console.log({url})
+    console.log({ url })
     const peopleRes = await fetch(url);
     const peopleJson = await peopleRes.json();
+
+    // convert ids to names
+    // const peopleWithAttribNames = peopleJson.map(person => {
+    //   const attribNames = person.attribs.map(attrib => {
+    //     const nameObj = roleAttribs.find(obj => obj.id === attrib.id);
+    //     return nameObj ? nameObj.name : null;
+    //   }
+    //   )
+    //   return { ...person, attribNames };
+    // });
+
+    // const peopleWithGender = peopleWithAttribNames.map(g => {
+    //   const genderId = genders.find(gender => gender.id === g.gender)
+    //   const genderNames = genderId ? genderId.name : ""
+    //   return { ...g, genderNames }
+    // }
+    // )
+
     setPeopleData(peopleJson);
-    console.log("People data", peopleJson);
     setSearchData('people');
+    setLoading(false)
 
   };
 
@@ -54,29 +77,33 @@ export default function AdvancedSearch( {setSearchData, setPeopleData }) {
     const rOrdersJson = await rOrders.json();
     setROrders(rOrdersJson);
 
-    const rSubTypes = await fetch("/religious_subtypes");
-    const rSubTypesJson = await rSubTypes.json();
-    setRSubTypes(rSubTypesJson);
+    // const rSubTypes = await fetch("/religious_subtypes");
+    // const rSubTypesJson = await rSubTypes.json();
+    // setRSubTypes(rSubTypesJson);
 
     const roles = await fetch("/roles");
     const rolesJson = await roles.json();
     setRoles(rolesJson);
-
   };
 
   const onRoleChange = async (e, v) => {
-    console.log(v.length)
-    // if(v.length < 0) {
-    //   console.log("inside length")
-    //   setRoleAttribs([]);
-    // }
-    console.log("id", e, v[0].id);
-    const attribsRes = await fetch(`/attribs/roles/${v[0].id}`);
-    console.log(attribsRes)
+    const attribsRes = await fetch(`/attribs`);
     const attribsJson = await attribsRes.json();
-    setRoleAttribs(attribsJson);
+    if (v != null) {
+      const attribs = v.map(item => attribsJson.filter(a => a.role_id === item.id)).reduce((a, c) => a.concat(c), [])
+      setRoleAttribs([...attribs]);
+    }
+    else setRoleAttribs([]);
   }
 
+  const onChangeRDesignation = async (v) => {
+    console.log("RDesign", v)
+    const rSubTypes = await fetch("/religious_subtypes");
+    const rSubTypesJson = await rSubTypes.json();
+    const rSubtypes = rSubTypesJson.filter((r) => r.religious_designation_id === v)
+    console.log({ rSubtypes })
+    setRSubTypes(rSubtypes);
+  }
 
   useEffect(() => {
     fetchData();
@@ -92,14 +119,14 @@ export default function AdvancedSearch( {setSearchData, setPeopleData }) {
             label: "Gender"
           },
           {
-            options: rDesignations,
-            fun: setsSelectedRDesignations,
-            label: "Religious Designation"
-          },
-          {
             options: rOrders,
             fun: setSelectedROrder,
             label: "Religious Order"
+          },
+          {
+            options: rDesignations,
+            fun: onChangeRDesignation,
+            label: "Religious Designation"
           }
         ].map(item =>
           <Autocomplete
@@ -112,14 +139,21 @@ export default function AdvancedSearch( {setSearchData, setPeopleData }) {
             renderInput={(params) => (
               <TextField {...params} label={item.label} variant="standard" />
             )}
-            onChange={(event, value) => item.fun(value.id)}
+            onChange={(event, value) => {
+              if (value === null) {
+                item.fun()
+              }
+
+              else item.fun(value.id)
+            }}
           />)
       }
 
-      <Autocomplete
+      {rSubTypes && <Autocomplete
         id="auto-complete"
         multiple
         options={rSubTypes}
+        noOptionsText={"Select Religious Designations to filter Sub types"}
         getOptionLabel={(option) => option.name || ""}
         autoComplete
         includeInputInList
@@ -130,8 +164,8 @@ export default function AdvancedSearch( {setSearchData, setPeopleData }) {
             variant="standard"
           />
         )}
-        onChange={(event, value) => setSelectedRSubtype(value[0].id)}
-      />
+        onChange={(event, value) => setSelectedRSubtype(value.map(t => t.id))}
+      />}
 
       <Autocomplete
         id="auto-complete"
@@ -150,17 +184,34 @@ export default function AdvancedSearch( {setSearchData, setPeopleData }) {
         id="auto-complete"
         multiple
         options={roleAttribs}
+        noOptionsText={"Select Roles to filter Attributes"}
         getOptionLabel={(option) => option.name || ""}
         autoComplete
         includeInputInList
         renderInput={(params) => (
           <TextField {...params} label="Attributes" variant="standard" />
         )}
-        onChange={(event, value) => setSelectedAttribs(value[0].id)}
+        onChange={(event, value) => setSelectedAttribs(value.map(t => t.id))}
       />}
 
-      {<Button variant="outlined" onClick={handleSearch}>Search</Button>}
-
+      {<Button
+        // sx={{border: "1px solid orange"}} 
+        variant="outlined" onClick={handleSearch}>Search</Button>}
+      {/* {!loading && <Button 
+        onClick={handleSearch} >
+        Search
+      </Button>}
+      {loading && <Button variant="primary"
+        disabled>
+        <Spinner
+          as="span"
+          animation="border"
+          size="sm"
+          role="status"
+          aria-hidden="true"
+        />
+        Loading...
+      </Button>} */}
     </>
   );
 }

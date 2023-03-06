@@ -14,38 +14,10 @@ import Stack from '@mui/material/Stack';
 
 export default function Roles({ roles }) {
 
-  function createData(values) {
-    return { values };
-  }
-
-  const rows = roles.map((role) => createData(role));
-
   return (
     <Container>
-      {/* <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 150 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell align="center"><b>Roles</b></TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => (
-              <TableRow
-                key={row.values}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-
-                <TableCell align="center">{row.values}</TableCell></TableRow>
-
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer> */}
-
-      {/* {roles.map((role) =><span><Badge bg="secondary">{role}</Badge>{' '}</span>)} */}
       <Stack direction="row" spacing={1} justifyContent={"center"}>
-        {roles.map((role) =>
+        {[...new Set(roles)].map((role) =>
           <Chip label={role} />
         )}
       </Stack>

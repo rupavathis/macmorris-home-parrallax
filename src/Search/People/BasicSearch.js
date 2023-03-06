@@ -4,9 +4,9 @@ import { useEffect, useState, useMemo } from "react";
 import Container from "@mui/material/Container";
 import AsyncSelect from 'react-select/async';
 import AdvancedSearch from './AdvancedSearch';
-import Content from './Content';
+import Content from './Content1';
 
-export default function BasicSearch({ setSearchData, setPeopleData, displayNames }) {
+export default function BasicSearch({ setSearchData, setPeopleData, displayNames, setLoading }) {
 
   console.log("basic")
  
@@ -17,11 +17,13 @@ export default function BasicSearch({ setSearchData, setPeopleData, displayNames
     newValue,
     actionMeta
   ) => {
+    setLoading(true)
     const peopleRes = await fetch(`/search/people/${newValue.id}`);
     const peopleJson = await peopleRes.json();
     console.log("people json", peopleJson);
     setPeopleData(peopleJson);
     setSearchData('people');
+    setLoading(false)
   };
 
   const filterNames = (inputValue) => {

@@ -15,17 +15,20 @@ import Box from '@mui/material/Box';
 import Search from "../Home/Search";
 import Content from './People/Content';
 import WorkContent from './Works/Content';
-
-
+import Spinner from 'react-bootstrap/Spinner'
 
 function Index() {
     const [selectedValue, setSelectedValue] = useState('people');
     const [searchData, setSearchData] = useState('');
     const [peopleData, setPeopleData] = useState([]);
-    const [worksData, setWorksData] = useState({});
+    const [worksData, setWorksData] = useState([]);
+    const [uniqData, setUniqData] = useState([]);
+
 
     const [displayNames, setDisplayNames] = useState([]);
     const [displayTitles, setDisplayTitles] = useState([]);
+    const [loading, setLoading] = useState(false);
+
 
 
     const fetchData = async () => {
@@ -48,6 +51,14 @@ function Index() {
         console.log(event.target.value);
         setSelectedValue(event.target.value)
     };
+
+    function getUniqData(data) {
+        return [...new Set(data.map(d => d.id))].map(
+            d => {
+                return data.find(e => e.id === d)
+            }
+        )
+    }
 
     return (
         <>
@@ -72,23 +83,32 @@ function Index() {
 
                 <Container>
                     {selectedValue === "people" && <People setSearchData={setSearchData} setPeopleData={setPeopleData}
-                        displayNames={displayNames} />}
-                    {selectedValue === "works" && <Works setSearchData={setSearchData} setWorksData={setWorksData} 
-                        displayTitles={displayTitles} />}
+                        displayNames={displayNames} setLoading={setLoading} />}
+                    {selectedValue === "works" && <Works setSearchData={setSearchData} setWorksData={setWorksData}
+                        displayTitles={displayTitles} setLoading={setLoading} loading={loading} />}
                     <Accordion>
                         <Accordion.Item eventKey="0">
                             {<Accordion.Header>Advanced Search</Accordion.Header>}
                             <Accordion.Body>
-                                {selectedValue === "people" && <AdvancedPeople setSearchData={setSearchData} setPeopleData={setPeopleData} />}
-                                {selectedValue === "works" && <AdvancedWorks setSearchData={setSearchData} setWorksData={setWorksData} />}
+                                {selectedValue === "people" && <AdvancedPeople setSearchData={setSearchData} setPeopleData={setPeopleData} 
+                                setLoading={setLoading} />}
+                                {selectedValue === "works" && <AdvancedWorks setSearchData={setSearchData} setWorksData={setWorksData} 
+                                setLoading={setLoading} />}
                             </Accordion.Body>
                         </Accordion.Item>
                     </Accordion>
                 </Container>
-                <Container style={{ padding: "40px" }}>
+                <Container style={{ padding: "40px", overflow: "hidden" }}>
                     {console.log({ selectedValue })}
-                    {searchData === "people" && selectedValue === "people" && <Content data={peopleData} />}
-                    {searchData  === "works" && selectedValue === "works" && <WorkContent data={worksData} />}
+                    {searchData === "people" && selectedValue === "people" && !loading && <Content data={getUniqData(peopleData)} />}
+                    {searchData === "works" && selectedValue === "works" && !loading && <WorkContent data={getUniqData(worksData)} />}
+
+                    {loading &&
+                        <Spinner animation="border" role="status" variant="primary">
+                            <span className="visually-hidden">Loading...</span>
+                        </Spinner>
+                    }
+
                 </Container>
 
             </Box>

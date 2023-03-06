@@ -1,63 +1,78 @@
-import Table from 'react-bootstrap/Table';
+import React, { useMemo } from 'react';
+import MaterialReactTable from 'material-react-table';
+import { ExportToCsv } from 'export-to-csv'; //or use your library of choice here
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import { Box, Button } from '@mui/material';
 import {
-  Link
+    Link
 } from "react-router-dom";
+import '../search.scss'
+
+//nested data is ok, see accessorKeys in ColumnDef below
 
 
-const columns = [
-    { id: 'title', label: 'Title', minWidth: 200 },
-    { id: 'authorID', label: 'Author', minWidth: 100 },
-    {
-      id: 'language',
-      label: 'Language',
-      minWidth: 100,
-      align: 'right',
-      format: (value) => value.toLocaleString('en-US'),
-    },
-    {
-      id: 'workDate',
-      label: 'Date of Work',
-      minWidth: 100,
-      align: 'right',
-      format: (value) => value.toLocaleString('en-US'),
-    },
-   
-  ];
-  
-function Content({ data }) {
-  console.log("content data", data)
-  return (
-    <Table striped>
-      <thead>
-        <tr>
-          {columns.map((column) => (
-            <th
-              key={column.id}
-              align={column.align}
-              style={{ minWidth: column.minWidth }}
-            >
-              {column.label}
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
+const Content = ({ data }) => {
+    //should be memoized or stable
 
-        {data.map((data) => (
-          <tr>
-            <td>
-              <Link className='link' to={`/works/${data.id}`}>
-                {data.display_title}
-              </Link>
-            </td>
-            <td>{data.author_id?.display_name}</td>
-            <td>{data.language?.name}</td>
-            <td>{data.work_date}</td>
-          </tr>
-        ))}
-      </tbody>
-    </Table>
-  );
-}
+
+    const columns =
+        [
+            {
+                accessorKey: 'display_title',
+                header: 'Title',
+                Cell: ({ renderedCellValue, row }) => {
+                    console.log({row})
+                    return (<Link className='link' to={`/works/${row.original.id}`}>
+                        <span>{renderedCellValue}</span>
+                    </Link>)
+                }
+            },
+            {
+                accessorKey: 'author_id.name',
+                header: 'Author Name',
+            },
+
+            {
+                accessorKey: 'work_date',
+                header: 'Date of Work',
+            },
+            {
+                accessorFn: (row) => `${[...new Set(row.languages.map(a => a.name))].join(",")}`, //accessorFn used to join multiple data into a single cell
+                id: 'language', //id is still required when using accessorFn instead of accessorKey
+                header: 'Language',
+            },
+
+        ]
+
+
+    const csvOptions = {
+        fieldSeparator: ',',
+        quoteStrings: '"',
+        decimalSeparator: '.',
+        showLabels: true,
+        useBom: true,
+        useKeysAsHeaders: false,
+        headers: columns.map((c) => c.header),
+    };
+
+    const csvExporter = new ExportToCsv(csvOptions);
+
+    const handleExportData = () => {
+        csvExporter.generateCsv(data);
+    };
+
+
+    return <MaterialReactTable columns={columns} data={data}
+        enableColumnActions={false}
+        enableDensityToggle={false}
+        initialState={{ density: 'compact' }}
+        renderTopToolbarCustomActions={({ table }) => (
+            <button onClick={handleExportData}>
+                <FileDownloadIcon />
+            </button>
+
+        )}
+    />;
+};
 
 export default Content;
